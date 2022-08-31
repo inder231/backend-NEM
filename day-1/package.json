@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "is-even": "^1.0.0"
+  },
+  "name": "day-1",
+  "description": "- Javascript - when js was created it was meant to run only in browser - build a website -frontend\r - ryan- run js outside browser\r - other run time environments - bun , deno and node\r - node.js - runtime environment\r   why node?\r   why we need js outside the browser\r   - to be able to do thing that we can't just do from browser -accessing files, write scripts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
