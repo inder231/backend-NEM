@@ -1,0 +1,17 @@
+{
+  "name": "express-lecture",
+  "version": "1.0.0",
+  "description": "- ###### NEM here E stands for express\r - what is express => fast, unopinionated, minimalist web framework for node.js\r - Issue's with requests using http\r   - not intutive\r   - so many thing like res.write, res.end\r   - so many if else condition for GET and POST request\r - EXPRESS\r     - built on top of http itself => a better version of http",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
