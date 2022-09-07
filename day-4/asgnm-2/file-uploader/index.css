@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(6, 26, 27);
+}
+* {
+    box-sizing: border-box;
+}
+.container{
+    margin: 2rem auto;
+    max-width: 300px;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    border:3px solid lightgray;
+    padding:2rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    justify-content: center;
+    text-align: center;
+    align-items: space-between;
+    background-color: lightgray;
+}
+
+.input-group{
+    width: 90%;
+    padding: .5rem;
+    text-align: left;
+
+}
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: rgb(37, 83, 3);
+    font-size: 18px;
+    color: white;
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+}
