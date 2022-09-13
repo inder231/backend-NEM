@@ -1,0 +1,16 @@
+1. Find all the countries in region "Asia"                         -- db.collectionName.find({region:"Asia"});
+2. Find all the countries with currency: "EUR"                     -- db.collectionName.find({currency:"EUR"});
+3. Find all the countries whose timezone's gmtOffset is 3600       -- db.collectionName.find({timezones:{$elemMatch:{gmtOffset:3600}}});
+4. Find all the countries whose timezone's gmtOffset is 3600 AND
+ timezone name is Central European Time (or CET)                   --   db.users.find({timezones:{$elemMatch:{$and:[{gmtOffset:3600},{abbreviation:"CET"}]}}}) 
+5. Find All the countries with more than 1 time zone --
+6. Find All the countries with "Korean" translation (KR) -- 
+7. Work with the data, use rest of the operators to
+	 find any other data for practice you want --
+8. $unset -to remove a key from the document-               --  db.users.updateOne({id:20},{$unset:{America:null,Barbados:null}});
+9. $rename -to rename a field-                              --  db.users.updateOne({id:20},{$rename:{subregion:"state"}});
+10. $set  -to update different field values-                --  db.users.updateOne({id:20},{$set:{state:"Bilaspur",emojiU:"none"}});
+11. $push                                             	--  db.users.updateOne({id:20},{$push:{myName:"XYZ"}})
+12. $pop 									--  db.users.updateOne({id:20},{$pop:{myName:1}}); 
+		it pop last element from the myName array if value passed is 1, else if -1 it pop from the start of the array i.e index 0
+12  $min $max  min and max latitude                         --   db.users.aggregate({$group:{"_id":"latitude","lowLat":{"$min":"$latitude"},"highLat":{"$max":"$latitude"}}});
