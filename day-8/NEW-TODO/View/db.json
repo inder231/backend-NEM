@@ -1,0 +1,59 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "text": "Local Todo1",
+      "isCompleted": false
+    },
+    {
+      "id": 2,
+      "text": "Local Todo2",
+      "isCompleted": false
+    },
+    {
+      "id": 3,
+      "text": "Local Todo3",
+      "isCompleted": false
+    },
+    {
+      "text": "sdf",
+      "isCompleted": false,
+      "id": 4
+    },
+    {
+      "text": "",
+      "isCompleted": false,
+      "id": 5
+    },
+    {
+      "text": "abcd",
+      "isCompleted": false,
+      "id": 6
+    },
+    {
+      "text": "asdf",
+      "isCompleted": false,
+      "id": 7
+    },
+    {
+      "text": "asdfasdf",
+      "isCompleted": false,
+      "id": 8
+    },
+    {
+      "text": "Buy mangoes",
+      "isCompleted": false,
+      "id": 9
+    },
+    {
+      "text": "completed assignment",
+      "isCompleted": false,
+      "id": 10
+    },
+    {
+      "text": "buy apples",
+      "isCompleted": false,
+      "id": 11
+    }
+  ]
+}
