@@ -6,6 +6,7 @@ const Tools = ({ todo, onDelete,updateStatus }) => {
       <input
         className={styles.checkbox}
         type="checkbox"
+        checked={todo.status}
         onChange={() => updateStatus(todo._id,todo.status)}
       />
       <p className={todo.status ? styles.striked : styles.textStriked}>
