@@ -3,7 +3,7 @@ const { connection } = require("./config/db");
 const { loginRouter } = require("./routes/login");
 const { signupRouter } = require("./routes/signup");
 const JWT = require("jsonwebtoken");
-const passport = require("passport");
+const passport = require("./config/google.oauth");
 require("dotenv").config();
 
 require("dotenv").config();
@@ -39,6 +39,7 @@ app.get(
   passport.authenticate("google", {
     successRedirect: "/auth/google/success",
     failureRedirect: "/auth/google/failure",
+    session: false,
   })
 );
 app.listen(port, async () => {
