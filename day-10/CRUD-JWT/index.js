@@ -3,6 +3,7 @@ const { connection } = require("./config/db");
 const { loginRouter } = require("./routes/login");
 const { signupRouter } = require("./routes/signup");
 const JWT = require("jsonwebtoken");
+const passport = require("./config/google.oauth");
 require("dotenv").config();
 
 require("dotenv").config();
@@ -28,6 +29,19 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/auth/google/success",
+    failureRedirect: "/auth/google/failure",
+    session: false,
+  })
+);
 app.listen(port, async () => {
   try {
     await connection;

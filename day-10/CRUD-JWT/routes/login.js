@@ -3,7 +3,7 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const { UserModel } = require("../models/signup");
-
+require('dotenv').config();
 const loginRouter = express.Router();
 
 loginRouter.post(
@@ -29,7 +29,7 @@ loginRouter.post(
       let hash = user.password;
       bcrypt.compare(password, hash, function (err, result) {
         if (result) {
-          var token = JWT.sign({ email }, "secret",{expiresIn:36000});
+          var token = JWT.sign({ email }, process.env.SECRET_KEY,{expiresIn:3600});
           res.send({ msg: "Login successfull", token: token });
         } else {
           res.send("Login failed, invalid credentials!");
