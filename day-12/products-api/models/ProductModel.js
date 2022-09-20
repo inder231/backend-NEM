@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const ProductSchema = mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  rating: { type: Number },
-  reviews: { type: [String] },
-  reviewCount: { type: Number, default: 0 },
-  email:{type:String},
+  category: { type: String, required: true },
+  rating: { type: Number,default:0 },
+  email: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 
