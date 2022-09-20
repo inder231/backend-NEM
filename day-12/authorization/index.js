@@ -21,13 +21,11 @@ app.get("/products", authentication, (req, res) => {
 });
 // admin seller
 app.post("/product/create", authentication,authorization(["admin,seller"]), (req, res) => {
-
-  return res.send("Product craeted");
+  return res.send("Product created");
 });
 // admin
 app.delete("/product/:productId", authentication,authorization(["admin"]), (req, res) => {
-
-  return res.send("Product craeted");
+  return res.send("Product deleted");
 });
 
 
