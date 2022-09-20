@@ -1,0 +1,5 @@
+# BACKEND-NEM (NODE- EXPRESS-MONGOOSE)
+##   Learnings
+  - CRUD operations
+  - AUTHENTICATION
+  - AUTHORIZATION
