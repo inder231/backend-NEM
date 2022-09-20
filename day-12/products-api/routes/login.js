@@ -24,7 +24,8 @@ loginRouter.post("/",[
         }
         const hashedPass = user.password;
         bcrypt.compare(password,hashedPass,(err,result)=>{
-            if(err){
+            console.log(err,result);
+            if(err||result===false){
                 return res.status(404).send({success:false,message:"Wrong Password!"})
             }
             const token = jwt.sign({email},process.env.SECRET_KEY,{expiresIn:3600});
