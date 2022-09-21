@@ -11,6 +11,7 @@ export const AppcontextProvider = ({ children }) => {
   const [notes, setNotes] = useState("");
   const [login, setLogin] = useState("");
   const [signup, setSignup] = useState("");
+
   const signupUser = (user) => {
     setLoading(true);
     axios
@@ -39,16 +40,19 @@ export const AppcontextProvider = ({ children }) => {
         setError(true);
       });
   };
-  const getNotes = () => {
-    axios
-      .get("http://localhost:8000/notes", {
+  const getNotes = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/notes", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((res) => setNotes(res.data.notes))
-      .catch((err) => console.log(err));
+      });
+      setNotes(res.data.notes);
+      return res.data;
+    } catch (err) {
+      return err.response.data;
+    }
   };
   const createNote = async (payload) => {
     try {
@@ -59,28 +63,36 @@ export const AppcontextProvider = ({ children }) => {
         },
       });
     } catch (err) {
-      return console.log(err);
+      return err;
     }
   };
-  const updateNote = (payload, id) => {
-    axios
-      .patch(`http://localhost:8000/notes/edit/:${id}`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {})
-      .catch((err) => {});
+  const updateNote = async (payload, id) => {
+    try {
+      return await axios.patch(
+        `http://localhost:8000/notes/edit/${id}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      return err;
+    }
   };
   const deleteNote = async (noteId) => {
     try {
-      return await axios.delete(`http://localhost:8000/notes/delete/${noteId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return await axios.delete(
+        `http://localhost:8000/notes/delete/${noteId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (err) {
       return err;
     }

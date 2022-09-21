@@ -21,19 +21,32 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon, AddIcon } from "@chakra-ui/icons";
-
+import { useNavigate } from "react-router-dom";
 import { Appcontext } from "../context/Appcontext";
-import { Form } from "react-router-dom";
 const Notes = () => {
   const { getNotes, notes, createNote, deleteNote, updateNote } =
     useContext(Appcontext);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCreate,
+    onOpen: onOpenCreate,
+    onClose: onCloseCreate,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenUpdate,
+    onOpen: onOpenUpdate,
+    onClose: onCloseUpdate,
+  } = useDisclosure();
   const toast = useToast();
+  const navigate = useNavigate();
 
-  const [name, setName] = useState("");
   const [heading, setHeading] = useState("");
   const [note, setNote] = useState("");
   const [tag, setTag] = useState("");
+  const [update, setUpdate] = useState({});
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    setUpdate({ ...update, [name]: value });
+  };
   const AddNewNote = async () => {
     let payload = {
       Heading: heading,
@@ -51,7 +64,7 @@ const Notes = () => {
               duration: 2000,
               isClosable: true,
             });
-            onClose();
+            onCloseCreate();
             getNotes();
           }
         })
@@ -73,6 +86,29 @@ const Notes = () => {
         isClosable: true,
       });
     }
+  };
+  const UpdateNote = async (id) => {
+    await updateNote(update, id).then((res) => {
+      if (res && res?.data?.success === true) {
+        toast({
+          title: "Success",
+          description: "Note updated successfully",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        getNotes();
+        onCloseUpdate();
+      } else if (res?.response?.data?.success === false) {
+        toast({
+          title: "Error",
+          description: res.response.data.message,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    });
   };
   const DeleteNote = async (id) => {
     await deleteNote(id)
@@ -99,7 +135,20 @@ const Notes = () => {
       });
   };
   useEffect(() => {
-    getNotes();
+    getNotes()
+      .then((res) => {
+        if (res?.success === false) {
+          toast({
+            title: "Error",
+            description: res.message,
+            status: "warning",
+            duration: 1000,
+            isClosable: true,
+          });
+          navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Box textAlign={"center"}>
@@ -108,11 +157,19 @@ const Notes = () => {
         <Text fontSize="2xl" color="gray.400">
           Create Note
         </Text>
-        <AddIcon onClick={onOpen} />
+        <AddIcon
+          color="green.900"
+          boxSize="24px"
+          cursor="pointer"
+          border="1px solid black"
+          padding="5px"
+          borderRadius=".5rem"
+          onClick={onOpenCreate}
+        />
       </Box>
       <Modal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenCreate}
+        onClose={onCloseCreate}
         size="sm"
         scrollBehavior="inside"
       >
@@ -152,7 +209,7 @@ const Notes = () => {
               <Button colorScheme="blue" mr={3} onClick={AddNewNote}>
                 Create
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onCloseCreate}>Cancel</Button>
             </ModalFooter>
           </ModalBody>
         </ModalContent>
@@ -168,17 +225,80 @@ const Notes = () => {
             return (
               <Flex
                 key={index}
-                alignItems="space-evenly"
+                alignItems="center"
                 justifyContent="space-between"
                 padding=".5rem"
                 margin=".5rem"
+                border="1px solid black"
               >
-                <EditIcon />
+                <EditIcon
+                  cursor="pointer"
+                  color="orange.400"
+                  onClick={onOpenUpdate}
+                />
+                <Modal
+                  isOpen={isOpenUpdate}
+                  onClose={onCloseUpdate}
+                  size="sm"
+                  scrollBehavior="inside"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Update Note</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                      <FormControl>
+                        <FormLabel>Heading</FormLabel>
+                        <Input
+                          required
+                          placeholder="Heading"
+                          defaultValue={note.Heading}
+                          name="Heading"
+                          onChange={(e) => handleFieldChange(e)}
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel>Note</FormLabel>
+                        <Input
+                          required
+                          placeholder="Note"
+                          defaultValue={note.Note}
+                          name="Note"
+                          onChange={(e) => handleFieldChange(e)}
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel>Tag</FormLabel>
+                        <Input
+                          required
+                          placeholder="Tag"
+                          defaultValue={note.Tag}
+                          name="Tag"
+                          onChange={(e) => handleFieldChange(e)}
+                        />
+                      </FormControl>
+                      <ModalFooter>
+                        <Button
+                          colorScheme="blue"
+                          mr={3}
+                          onClick={() => UpdateNote(note._id)}
+                        >
+                          Update
+                        </Button>
+                        <Button onClick={onCloseUpdate}>Cancel</Button>
+                      </ModalFooter>
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
                 <Box>
                   <Text>{note.Heading}</Text>
                   <Text fontSize="8px">{note.Note}</Text>
                 </Box>
-                <DeleteIcon onClick={() => DeleteNote(note._id)} />
+                <DeleteIcon
+                  cursor="pointer"
+                  color="red.400"
+                  onClick={() => DeleteNote(note._id)}
+                />
               </Flex>
             );
           })

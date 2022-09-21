@@ -9,7 +9,7 @@ notesController.get("/", async (req, res) => {
     const { userId } = req.body;
     // console.log(req.body.userId); // from the authentication middleware
     const notes = await NotesModel.find({ userId });
-    res.status(200).send({success:true,notes:notes});
+    res.status(200).send({message:"Here are your Notes",success:true,notes:notes});
   } catch (error) {
     return res
       .status(500)
@@ -37,14 +37,14 @@ notesController.post("/create", async (req, res) => {
 notesController.patch("/edit/:noteId", async (req, res) => {
   try {
     const { userId } = req.body;
-    const { noteId } = req.params.noteId;
+    const { noteId } = req.params;
     const updated_note = await NotesModel.findOneAndUpdate({_id:noteId,userId},{...req.body});
     if (!updated_note) {
       return res
         .status(404)
         .send({ message: "Note not found", success: false });
     }
-    return res.send(200).send({message: "Updated Note",success:true})
+    return res.status(201).send({message: "Note Updated Successfully",success:true})
   } catch (error) {
     return res
       .status(500)
