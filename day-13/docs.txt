@@ -1,0 +1,10 @@
+PORT /user/signup - {} -
+POST /user/login - {} - match password ? token : invalid user
+
+POST /notes/create - {} - create a note
+GET /notes/:userId - {} - verify token && userId - read notes of only notes regarding to the logged in userId
+PATCH /notes/edit/:noteId - {} - update the note
+DELETE /notes/delete/:noteId - {} - delete the note
+
+
+
