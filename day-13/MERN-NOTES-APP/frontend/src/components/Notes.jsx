@@ -137,6 +137,7 @@ const Notes = () => {
   useEffect(() => {
     getNotes()
       .then((res) => {
+        console.log(res);
         if (res?.success === false) {
           toast({
             title: "Error",

@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-const port = process.env.PORT;
+const PORT = process.env.PORT||8080
 
 // middlewares
 app.use(express.json());
@@ -24,13 +24,13 @@ app.use(authentication);
 app.use("/notes", notesController);
 
 // listening to server
-app.listen(port, async () => {
+app.listen(PORT, async () => {
   try {
     await connection;
     console.log(
-      `Server is running on http://localhost:${port} and connected to DB products`
+      `Server is running on http://localhost:${ PORT} and connected to DB products`
     );
   } catch (error) {
-    console.log(`Server connnection failed`);
+    console.log(`Server connnection failed ${error}`);
   }
 });
