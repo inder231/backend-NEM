@@ -3,6 +3,7 @@ const { connection } = require("./config/db");
 const { loginRouter } = require("./routes/login");
 const { productRouter } = require("./routes/product");
 const { signupRouter } = require("./routes/signup");
+const { router } = require("./routes/user");
 require("dotenv").config();
 
 const app = express();
@@ -22,7 +23,10 @@ app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 // PRODUCTS
 app.use("/user", productRouter);
+// AUTH 
+app.use("/auth",router)
 // =====
+
 
 // listening to server
 app.listen(port, async () => {
